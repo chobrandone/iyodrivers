@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "999530684052",
+    "project_id": "iyodrivers",
+    "storage_bucket": "iyodrivers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999530684052:android:e0fe25d5c4d6ce23a65e81",
+        "android_client_info": {
+          "package_name": "com.example.iyodrivers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999530684052-ds9a8vdjku65dj5eseq6bnf1t3blih7v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDUxtpXxY8_xMLZ1jYiNSQOO4RQEq604g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999530684052-ds9a8vdjku65dj5eseq6bnf1t3blih7v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
