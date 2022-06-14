@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iyodrivers/screens/screens.dart';
+import 'package:iyodrivers/routes/route.dart';
 
 class AvailableCarsScreen extends StatefulWidget {
   static const routeName = '/available-cars';
@@ -114,7 +115,7 @@ class _AvailableCarsScreenState extends State<AvailableCarsScreen> {
                       ),
                      GestureDetector(
                        onTap: () {
-                         Navigator.pushNamed(context, BookNowScreen.routeName);
+                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const BookNowScreen()));
                        },
                        child:  Container(
 

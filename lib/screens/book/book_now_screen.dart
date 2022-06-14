@@ -12,6 +12,9 @@ class BookNowScreen extends StatefulWidget {
 }
 
 class _BookNowScreenState extends State<BookNowScreen> {
+  DateTime date = DateTime.now();
+  TimeOfDay time = TimeOfDay.now();
+
 
    String topic ="packages";
   // Initial Selected Value
@@ -164,49 +167,80 @@ class _BookNowScreenState extends State<BookNowScreen> {
         ),
         Row(
           children: [
-            Container(
-              width: w * 0.4,
-              height: h * 0.065,
-              margin: const EdgeInsets.only(left: 30, top: 30),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                BoxShadow(
-                    blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-              ]),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: "date",
-                    prefixIcon: const Icon(
-                      Icons.event,
-                      color: Color(0xffCEA110),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+            GestureDetector(
+
+              onTap: () async{
+                DateTime? newDate= await  showDatePicker(
+                    context: context,
+                    initialDate: date,
+                    firstDate: DateTime(2022),
+                    lastDate: DateTime(2025));
+                // if cancle button
+                if(newDate == null)return;
+
+                //if ok =>Dtaetime
+                setState(() {
+                  date =newDate;
+                });
+              },
+              child: Container(
+                alignment: Alignment.center,
+                width: w * 0.4,
+                height: h * 0.065,
+                margin: const EdgeInsets.only(left: 30, top: 30),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                  BoxShadow(
+                      blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                ]),
+                child: Text(
+                  '${date.day}/${date.month}/${date.year}',
+
+                  // decoration: InputDecoration(
+                  //     hintText: "date",
+                  //     prefixIcon: const Icon(
+                  //       Icons.event,
+                  //       color: Color(0xffCEA110),
+                  //     ),
+                  //     focusedBorder: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
+                  //     enabledBorder: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
+                  //     border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+                ),
               ),
             ),
             Expanded(child: Container()),
-            Container(
-              width: w * 0.4,
-              height: h * 0.065,
-              margin: const EdgeInsets.only(top: 30, right: 30),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                BoxShadow(
-                    blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-              ]),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: "heure",
-                    prefixIcon: const Icon(
-                      Icons.timer,
-                      color: const Color(0xffCEA110),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+            GestureDetector(
+              onTap: () async {
+             TimeOfDay? newTime= await   showTimePicker(context: context, initialTime: time);
+                if(newTime== null)return;
+                setState(() {
+                  time = newTime;
+                });
+              },
+              child: Container(
+                alignment: Alignment.center,
+                width: w * 0.4,
+                height: h * 0.065,
+                margin: const EdgeInsets.only(top: 30, right: 30),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                  BoxShadow(
+                      blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                ]),
+                child: Text(
+                      '${time.hour} : ${time.minute} ${time.period.name} '
+                  // decoration: InputDecoration(
+                  //     hintText: "heure",
+                  //     prefixIcon: const Icon(
+                  //       Icons.timer,
+                  //       color: const Color(0xffCEA110),
+                  //     ),
+                  //     focusedBorder: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
+                  //     enabledBorder: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
+                  //     border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+                ),
               ),
             ),
           ],
