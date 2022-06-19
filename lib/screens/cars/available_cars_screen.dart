@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iyodrivers/screens/screens.dart';
 import 'package:iyodrivers/routes/route.dart';
+
+import '../../models/user_model.dart';
 
 class AvailableCarsScreen extends StatefulWidget {
   static const routeName = '/available-cars';
@@ -12,6 +16,22 @@ class AvailableCarsScreen extends StatefulWidget {
 }
 
 class _AvailableCarsScreenState extends State<AvailableCarsScreen> {
+
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return initWidget();
@@ -26,11 +46,50 @@ class _AvailableCarsScreenState extends State<AvailableCarsScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              child: Text(""
-                  "welcome",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+       Container(
+         margin: EdgeInsets.only(left: 20,right: 20,top: 10),
+         child: Row(
+           children: [
+            Expanded(child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+
+                  child: Text(
+                      "welcome", style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+                ),
+                Text("${loggedInUser.name  }",style: TextStyle(fontWeight: FontWeight.w200,fontSize: 20),),
+              ],
             ),
-            Text("name",style: TextStyle(fontWeight: FontWeight.w200,fontSize: 20),),
+            ),
+             Column(
+               children: [
+                 Container(
+                   decoration: const BoxDecoration(),
+                   child: Container(
+                     width:50,
+                     // height: 350.0,
+                     child: Center(
+                       child: Column(
+                         children: const [
+                           CircleAvatar(
+                             backgroundImage: AssetImage(
+                               "assets/images/pic.png",
+                             ),
+                             radius: 50.0,
+
+                           )
+
+                         ],
+                       ),
+                     ),
+                   ),
+                 )
+               ],
+             )
+           ],
+         ),
+       ),
             Container(
               margin: const EdgeInsets.only(top: 20),
               alignment: Alignment.center,
@@ -555,4 +614,6 @@ class _AvailableCarsScreenState extends State<AvailableCarsScreen> {
       ),
     );
   }
+
+
 }

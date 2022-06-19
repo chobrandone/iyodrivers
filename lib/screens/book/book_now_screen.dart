@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iyodrivers/screens/cars/available_cars_screen.dart';
-import 'package:iyodrivers/screens/screens.dart';
+import '../cars/available_cars_screen.dart';
+import '../profile/profile_screen.dart';
 
 class BookNowScreen extends StatefulWidget {
   static const routeName = '/book-now';
-
   const BookNowScreen({Key? key}) : super(key: key);
 
   @override
@@ -12,421 +13,554 @@ class BookNowScreen extends StatefulWidget {
 }
 
 class _BookNowScreenState extends State<BookNowScreen> {
+  List<String> items = ['methos of payment','Cash','Momo'];
+  String? selectedItem= 'methos of payment';
+
   DateTime date = DateTime.now();
+
   TimeOfDay time = TimeOfDay.now();
 
-
-   String topic ="packages";
-  // Initial Selected Value
-  String dropdownvalue = 'Comment vous vouler payer';
-
-  // List of items in our dropdown menu
-  var items = [
-    'Comment vous vouler payer',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-  // var payments = ['Comment vous voulez payer', 'Cash', 'Mobile Money'];
+  //form key
+  final _formkey = GlobalKey<FormState>();
+  //ediiting controller
+  final nameEditingController  = new TextEditingController();
+  final emailEditingController = new TextEditingController();
+  final phoneNumberEditingController  = new TextEditingController();
+  final dateEditingController = new TextEditingController();
+  final timeEditingController = new TextEditingController();
+  final carBrandEditingController = new TextEditingController();
+  final paymentEditingController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
+    //nameField
+    final nameField =TextFormField(
+
+      autofocus: false,
+      controller: nameEditingController,
+      keyboardType: TextInputType.emailAddress,
+
+      // validator: () {},
+      validator: (value) {
+        RegExp regex = new RegExp(r'^.{3,}$');
+        if (value!.isEmpty) {
+          return (" Name cannot be Empty");
+        }
+        if (!regex.hasMatch(value)) {
+          return (" Valid name(Min. 3 Character)");
+        }
+        return null;
+      },
+
+
+      onSaved :(value){
+        nameEditingController.text=value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+
+          hintText: "Name",
+          prefixIcon: Icon(
+            Icons.person,
+            color: Color(0xffCEA110),
+          ),
+          contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
+
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+
+    );
+    final emailField =TextFormField(
+
+      autofocus: false,
+      controller: emailEditingController,
+      keyboardType: TextInputType.emailAddress,
+
+      // validator: () {},
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Email");
+        }
+        // reg expression for email validation
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+            .hasMatch(value)) {
+          return ("Please Enter a valid email");
+        }
+        return null;
+      },
+      onSaved :(value){
+        emailEditingController.text=value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+
+          hintText: "email",
+          prefixIcon: Icon(
+            Icons.email,
+            color: Color(0xffCEA110),
+          ),
+          contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
+
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+
+    );
+
+    //phoneNumberField
+    final phoneNumberField =TextFormField(
+
+      autofocus: false,
+      controller: phoneNumberEditingController,
+      keyboardType: TextInputType.emailAddress,
+
+      // validator: () {},
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your phone number");
+        }
+        // reg expression for email validation
+        if (!RegExp("^[0-9+_.-]")
+            .hasMatch(value)) {
+          return ("Please Enter a valid phone number");
+        }
+        return null;
+      },
+      onSaved :(value){
+        phoneNumberEditingController.text=value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+
+          hintText: "phone number",
+          prefixIcon: Icon(
+            Icons.call,
+            color: Color(0xffCEA110),
+          ),
+          contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
+
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+
+    );
+    //carBrandField
+    final carBrandField =TextFormField(
+
+      autofocus: false,
+      controller: carBrandEditingController,
+      keyboardType: TextInputType.emailAddress,
+
+      // validator: () {},
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Email");
+        }
+        // reg expression for email validation
+        if (!RegExp("^[a-zA-Z0-9+_.-]")
+            .hasMatch(value)) {
+          return ("Please Enter a valid brand");
+        }
+        return null;
+      },
+      onSaved :(value){
+        carBrandEditingController.text=value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+
+          hintText: "brand",
+          prefixIcon: Icon(
+            Icons.email,
+            color: Color(0xffCEA110),
+          ),
+          contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
+
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+
+    );
+    final dateField =TextFormField(
+
+
+      autofocus: false,
+      controller: dateEditingController,
+
+        textAlignVertical: TextAlignVertical.center,
+
+
+      onTap: () async{
+        DateTime? newDate= await  showDatePicker(
+            context: context,
+            initialDate: date,
+
+            firstDate: DateTime(2022),
+            lastDate: DateTime(2025));
+        // if cancle button
+        if(newDate == null)return;
+
+
+        //if ok =>Dtaetime
+        setState(() {
+          Timestamp myTimeStamp =Timestamp.fromDate(date);
+          DateTime myDateTime = myTimeStamp.toDate();
+          date =newDate;
+        });
+      },
+
+      // validator: () {},
+      // validator: (value) {
+      //   if (value!.isEmpty) {
+      //     return ("Please Enter the date");
+      //   }
+      //   // reg expression for email validation
+      //   if (!RegExp("^[^[0-9+_.-]")
+      //       .hasMatch(value)) {
+      //     return ("Please Enter a valid date");
+      //   }
+      //   return null;
+      // },
+      onSaved :(value){
+        dateEditingController.text=value!;
+      },
+
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        // hintText: "${date.day}/${date.month}/${date.year}",
+            counterText: "${date.day}/${date.month}/${date.year}",
+
+            // counterText: "${date.day}/${date.month}/${date.year}",
+
+          // prefixIcon: Icon(
+          //   Icons.email,
+          //   color: Color(0xffCEA110),
+          // ),
+          contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
+
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+
+    );
+    final timeField =TextFormField(
+
+      autofocus: false,
+      controller: timeEditingController,
+      keyboardType: TextInputType.emailAddress,
+
+
+
+      onTap: () async {
+        TimeOfDay? newTime= await   showTimePicker(context: context, initialTime: time);
+        if(newTime== null)return;
+        setState(() {
+          time = newTime;
+        });
+      },
+
+      // validator: () {},
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter the time");
+        }
+        // reg expression for email validation
+        if (!RegExp("^[^[0-9+_.-]")
+            .hasMatch(value)) {
+          return ("Please Enter a valid time");
+        }
+        return null;
+      },
+      onSaved :(value){
+        timeEditingController.text=value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+
+          hintText:  '${time.hour} : ${time.minute} ${time.period.name} ',
+          // prefixIcon: Icon(
+          //   Icons.email,
+          //   color: Color(0xffCEA110),
+          // ),
+          contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
+
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+
+    );
+    final paymentField =TextFormField(
+
+      autofocus: false,
+      controller: paymentEditingController,
+      keyboardType: TextInputType.emailAddress,
+
+      // validator: () {},
+      // validator: (value) {
+      //   if (value!.isEmpty) {
+      //     return ("Please Enter Your Email");
+      //   }
+      //   // reg expression for email validation
+      //   if (!RegExp("^[a-zA-Z0-9+_.-]")
+      //       .hasMatch(value)) {
+      //     return ("Please Enter a valid brand");
+      //   }
+      //   return null;
+      // },
+      onSaved :(value){
+        paymentEditingController.text=value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+
+          hintText: "payment method",
+          prefixIcon: Icon(
+            Icons.attach_money,
+            color: Color(0xffCEA110),
+          ),
+          contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
+
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
+
+    );
+    final bookButton= Material(
+
+      elevation: 8,
+      borderRadius: BorderRadius.circular(30),
+
+      color: Color(0xffCEA110),
+      child: MaterialButton(
+        padding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
+
+        minWidth: 350,
+        onPressed:() {
+          Map <String,dynamic> data ={"name":nameEditingController.text,"email":emailEditingController.text,"phoneNumber":phoneNumberEditingController.text,"brand":carBrandEditingController.text,"date":dateEditingController.text,"time":timeEditingController.text};
+          FirebaseFirestore.instance.collection("reserve").add(data);
+        },
+        child: Text("Login",textAlign: TextAlign.center, style: TextStyle(color: Colors.white,fontSize: 20),),
+      ),
+    );
+
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
-        body: SingleChildScrollView(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          child: Form(
+            key: _formkey,
             child: Column(
-      children: [
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                // Container(
+                //   child: Image.asset("assets/logo.png"),
+                // ),
+                SizedBox(height: 50,),
+                Container(
+                  padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                  child: Row(
+                    children: [
 
-        SizedBox(height: 50,),
-        Container(
-          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-          child: Row(
-            children: [
-
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, AvailableCarsScreen.routeName);
-              },
-              child:   const Icon(
-                Icons.arrow_back,
-                size: 20,
-                color: Color(0xffCEA110),
-              ),
-            ),
-              Expanded(child: Container()),
-             GestureDetector(
-               onTap: () {
-                 Navigator.pushNamed(context, ProfileScreen.routeName);
-               },
-               child:  const Icon(
-                 Icons.person,
-                 size: 20,
-                 color: Color(0xffCEA110),
-               ),
-             )
-            ],
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(right: 20, top: 20),
-          alignment: Alignment.center,
-          child: const Text(
-            "RÉSERVE",
-            style: TextStyle(fontSize: 20, color: const Color(0xffCEA110), fontWeight: FontWeight.w600),
-          ),
-        ),
-        const SizedBox(
-          height: 35,
-        ),
-        Container(
-          width: w * 0.85,
-          height: h * 0.065,
-          margin: const EdgeInsets.only(left: 20, right: 20),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-            BoxShadow(blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-          ]),
-          child: TextField(
-            decoration: InputDecoration(
-                hintText: "Nom et Prénom",
-                prefixIcon: const Icon(
-                  Icons.person,
-                  color: Color(0xffCEA110),
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
-          ),
-        ),
-        Container(
-          width: w * 0.85,
-          height: h * 0.065,
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 30),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-            BoxShadow(blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-          ]),
-          child: TextField(
-            decoration: InputDecoration(
-                hintText: "E-mail",
-                prefixIcon: const Icon(
-                  Icons.email_outlined,
-                  color: Color(0xffCEA110),
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
-          ),
-        ),
-        Container(
-          width: w * 0.85,
-          height: h * 0.065,
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 30),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-            BoxShadow(blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-          ]),
-          child: TextField(
-            decoration: InputDecoration(
-                hintText: "Numéro de téléphone",
-                prefixIcon: const Icon(
-                  Icons.phone_android_outlined,
-                  color: Color(0xffCEA110),
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
-          ),
-        ),
-        Container(
-          width: w * 0.85,
-          height: h * 0.065,
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 30),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-            BoxShadow(blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-          ]),
-          child: TextField(
-            decoration: InputDecoration(
-                // hintText: "Mesedez"+topic,
-                prefixIcon: const Icon(
-                  Icons.car_rental,
-                  color: Color(0xffCEA110),
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)))
-
-          ),
-        ),
-        Row(
-          children: [
-            GestureDetector(
-
-              onTap: () async{
-                DateTime? newDate= await  showDatePicker(
-                    context: context,
-                    initialDate: date,
-                    firstDate: DateTime(2022),
-                    lastDate: DateTime(2025));
-                // if cancle button
-                if(newDate == null)return;
-
-                //if ok =>Dtaetime
-                setState(() {
-                  date =newDate;
-                });
-              },
-              child: Container(
-                alignment: Alignment.center,
-                width: w * 0.4,
-                height: h * 0.065,
-                margin: const EdgeInsets.only(left: 30, top: 30),
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                  BoxShadow(
-                      blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                ]),
-                child: Text(
-                  '${date.day}/${date.month}/${date.year}',
-
-                  // decoration: InputDecoration(
-                  //     hintText: "date",
-                  //     prefixIcon: const Icon(
-                  //       Icons.event,
-                  //       color: Color(0xffCEA110),
-                  //     ),
-                  //     focusedBorder: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                  //     enabledBorder: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                  //     border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
-                ),
-              ),
-            ),
-            Expanded(child: Container()),
-            GestureDetector(
-              onTap: () async {
-             TimeOfDay? newTime= await   showTimePicker(context: context, initialTime: time);
-                if(newTime== null)return;
-                setState(() {
-                  time = newTime;
-                });
-              },
-              child: Container(
-                alignment: Alignment.center,
-                width: w * 0.4,
-                height: h * 0.065,
-                margin: const EdgeInsets.only(top: 30, right: 30),
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                  BoxShadow(
-                      blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                ]),
-                child: Text(
-                      '${time.hour} : ${time.minute} ${time.period.name} '
-                  // decoration: InputDecoration(
-                  //     hintText: "heure",
-                  //     prefixIcon: const Icon(
-                  //       Icons.timer,
-                  //       color: const Color(0xffCEA110),
-                  //     ),
-                  //     focusedBorder: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                  //     enabledBorder: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(30), borderSide: const BorderSide(color: Colors.white)),
-                  //     border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
-                ),
-              ),
-            ),
-          ],
-        ),
-        Container(
-          width: w * 0.85,
-          height: h * 0.065,
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 30),
-          padding: const EdgeInsets.only(left: 30, right: 30),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-            BoxShadow(blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-          ]),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton(
-              value: dropdownvalue,
-
-              // Down Arrow Icon
-              icon: const Icon(
-                Icons.keyboard_arrow_down,
-                size: 30,
-              ),
-
-              // Array list of items
-              items: items.map((String items) {
-                return DropdownMenuItem(
-                  value: items,
-                  child: Text(items),
-                );
-              }).toList(),
-              // After selecting the desired option,it will
-              // change button value to selected value
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropdownvalue = newValue!;
-                });
-              },
-            ),
-
-            // Initial Value
-          ),
-        ),
-        // Container(
-        //   width: w * 0.85,
-        //   height: h * 0.065,
-        //   margin: const EdgeInsets.only(left: 20, right: 20, top: 30),
-        //   padding: const EdgeInsets.only(left: 30, right: 30),
-        //   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-        //     BoxShadow(blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-        //   ]),
-        //   child: DropdownButtonHideUnderline(
-        //     child: DropdownButton(
-        //       value: dropdownvalue,
-        //
-        //       // Down Arrow Icon
-        //       icon: const Icon(
-        //         Icons.keyboard_arrow_down,
-        //         size: 30,
-        //       ),
-        //
-        //       // Array list of items
-        //       items: items.map((String items) {
-        //         return DropdownMenuItem(
-        //           value: items,
-        //           child: Text(items),
-        //         );
-        //       }).toList(),
-        //       // After selecting the desired option,it will
-        //       // change button value to selected value
-        //       onChanged: (String? newValue) {
-        //         setState(() {
-        //           dropdownvalue = newValue!;
-        //         });
-        //       },
-        //     ),
-        //
-        //     // Initial Value
-        //   ),
-        // ),
-        const SizedBox(
-          height: 50,
-        ),
-        Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                // Navigator.pushNamed(context, AvailableCarsScreen.routeName);
-              },
-              child: Container(
-                width: w * 0.5,
-                height: h * 0.06,
-                margin: const EdgeInsets.only(left: 40),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    image:
-                        const DecorationImage(image: const AssetImage("assets/images/button.png"), fit: BoxFit.cover)),
-                child: const Center(
-                  child: Text(
-                    "RÉSERVE",
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, AvailableCarsScreen.routeName);
+                        },
+                        child:   const Icon(
+                          Icons.arrow_back,
+                          size: 20,
+                          color: Color(0xffCEA110),
+                        ),
+                      ),
+                      Expanded(child: Container()),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, ProfileScreen.routeName);
+                        },
+                        child:  const Icon(
+                          Icons.person,
+                          size: 20,
+                          color: Color(0xffCEA110),
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: const Center(
-                  child: Text("Ou"),
-                  // child: AssetImage("assets/images/logodark.png"),
+                Container(
+                  margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 20, top: 20),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "RÉSERVE",
+                          style: TextStyle(fontSize: 20, color: const Color(0xffCEA110), fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 35,
+                      ),
+
+                      SizedBox(height: 20,),
+                      Container(
+
+                        decoration: BoxDecoration(
+
+                            color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                          BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.3))
+                        ]),
+                        child: nameField,
+                      ),
+
+                      SizedBox(height: 20,),
+                      Container(
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                          BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                        ]),
+                        child:emailField,
+                      ),
+                      SizedBox(height: 30,),
+                      Container(
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                          BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                        ]),
+                        child:phoneNumberField,
+                      ),
+                      SizedBox(height: 30,),
+                      Container(
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                          BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                        ]),
+                        child:carBrandField,
+                      ),
+                      SizedBox(height: 30,),
+
+                      Row(
+                        children: [
+                          GestureDetector(
+
+                            onTap: () async{
+                              DateTime? newDate= await  showDatePicker(
+                                  context: context,
+                                  initialDate: date,
+                                  firstDate: DateTime(2022),
+                                  lastDate: DateTime(2025));
+                              // if cancle button
+                              if(newDate == null)return;
+
+                              //if ok =>Dtaetime
+                              setState(() {
+                                date =newDate;
+                              });
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: w * 0.4,
+                              height: h * 0.065,
+                              margin: const EdgeInsets.only( top: 10),
+                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                              ]),
+                              child: dateField
+                            ),
+                          ),
+                          Expanded(child: Container()),
+                          SizedBox(width: 5,),
+
+                          GestureDetector(
+
+                            onTap: () async {
+                              TimeOfDay? newTime= await   showTimePicker(context: context, initialTime: time);
+                              if(newTime== null)return;
+                              setState(() {
+                                time = newTime;
+                              });
+                            },
+                            child: Container(
+
+                              alignment: Alignment.center,
+                              width: w * 0.4,
+                              height: h * 0.065,
+                              margin: const EdgeInsets.only(top: 10, right: 20),
+                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                              ]),
+                              child: timeField
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20,),
+                      // Container(
+                      //
+                      //   decoration: BoxDecoration(
+                      //
+                      //       color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                      //     BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.3))
+                      //   ]),
+                      // child: Container(
+                      //   width: 280,
+                      //   padding: EdgeInsets.only(left: 20,right: 20),
+                      //   child: DropdownButton<String>(
+                      //     value: selectedItem,
+                      //     items: items.map((item) => DropdownMenuItem<String>(
+                      //       value: item,
+                      //       child: Text(item),
+                      //     )).toList(),
+                      //     onChanged: (item) => setState(() {
+                      //       selectedItem=item;
+                      //     }),
+                      //   ),
+                      // ),
+                      // ),
+
+
+
+                      Container(
+                        child: bookButton,),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 13,),
+                Container(
+                  child: Text(
+                    "ou",
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
 
-                // width: 200,
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                // Navigator.pushNamed(context, AvailableCarsScreen.routeName);
-              },
-              child: Container(
-                // width: w*0.5,
-                height: h * 0.06,
-                margin: const EdgeInsets.only(right: 40),
-                child: Image.asset("assets/images/calls.png"),
-              ),
-            ),
-          ],
+
+
+              ],),
+          ),
         ),
-      ],
-    )));
+      ),
+    );
   }
 }
-
-//
-//
-// import 'package:flutter/material.dart';
-// import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-//
-// class CarCategoryPage extends StatefulWidget {
-//   const CarCategoryPage({Key? key}) : super(key: key);
-//
-//   @override
-//   _CarCategoryPageState createState() => _CarCategoryPageState();
-// }
-//
-// class _CarCategoryPageState extends State<CarCategoryPage> {
-//
-//   List<String> _options=[
-//     "HOME","CART","MENU","SETTINGS","FAVORITES"
-//   ];
-//   int _currentIndex=0;
-//   @override
-//   Widget build(BuildContext context) {
-//
-//     return Scaffold(
-//       backgroundColor:Color(0xffCEA110),
-//       body: Container(
-//         color: Colors.red,
-//         child: Center(
-//             child: Text(_options[_currentIndex],
-//               style: TextStyle(
-//                   color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40),
-//             )),
-//       ),
-//
-//
-//
-//
-//
-//
-//       // bottomNavigationBar: CurvedNavigationBar(
-//       //   buttonBackgroundColor: Colors.white,
-//       //   backgroundColor: Colors.red,
-//       //   animationDuration: Duration(seconds: 1),
-//       //   // animationCurve: Curves.bounceOut,
-//       //   items: <Widget>[
-//       //     Icon(Icons.home,color:Color(0xffCEA110),),
-//       //     Icon(Icons.shopping_cart,color: Color(0xffCEA110),),
-//       //     Icon(Icons.restaurant_menu,color: Color(0xffCEA110),),
-//       //
-//       //   ],
-//       //   onTap: (index){
-//       //     setState(() {
-//       //       _currentIndex=index;
-//       //     });
-//       //   },
-//       // ),
-//
-//     );
-//   }
-// }

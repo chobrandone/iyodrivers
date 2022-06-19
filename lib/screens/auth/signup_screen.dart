@@ -61,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
 
-            hintText: "First Name",
+            hintText: "Name",
             prefixIcon: Icon(
               Icons.person,
               color: Color(0xffCEA110),

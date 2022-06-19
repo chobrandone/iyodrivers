@@ -20,8 +20,8 @@ class UserModel {
     return {
       'uid': uid,
       'email': email,
-      'firstName': name,
-      'secondName': phoneNumber,
+      'name': name,
+      'phoneNumber': phoneNumber,
     };
   }
 }
