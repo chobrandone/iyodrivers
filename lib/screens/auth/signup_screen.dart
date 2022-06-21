@@ -5,10 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iyodrivers/screens/cars/available_cars_screen.dart';
 
 import '../../models/user_model.dart';
+import 'login_screen.dart';
 // import 'package:iyodriver/Screens/screens.dart';
 
 class SignUpScreen extends StatefulWidget {
-  static const routeName = '/signup';
+  // static const routeName = '/signup';
 
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -31,6 +32,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   //firebase
   final _auth = FirebaseAuth.instance;
 
+  // boolean loading
+  bool loading =false;
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +72,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
       );
@@ -111,9 +114,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
       );
@@ -150,9 +153,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
       );
@@ -189,9 +192,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
       );
@@ -225,9 +228,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+                borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
       );
@@ -240,9 +243,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           padding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
           minWidth: 350,
           onPressed:() {
+
             signUp(emailEditingController.text, passwordEditingController.text);
 
           },
+
           child: Text("Inscrire",textAlign: TextAlign.center, style: TextStyle(color: Colors.white,fontSize: 20),),
         ),
       );
@@ -283,7 +288,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
+                          children: <Widget>[
+                            Container(
+                              // margin: EdgeInsets.only( top: 20),
+                             // padding: EdgeInsets.only(top: 30),
+                             child:  IconButton(icon: Icon(Icons.arrow_back, color: Colors.grey,),
+                      onPressed: (){
+                        //paasin this to our root
+                        // Navigator.of(context).pop();
+                      },
+                    ),
+                            ),
                             Container(
                               // margin: EdgeInsets.only(top: ),
                               child: Image.asset(
@@ -309,42 +324,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
                  child: Column(
                    children: [
                      Container(
-                       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                         BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                       ]),
+                       // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                       //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                       // ]),
                        child: nameField,
                      ),
                      SizedBox(height: 20,),
                      Container(
-                       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                         BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                       ]),
+                       // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                       //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                       // ]),
                        child: emailField,
                      ),
                      SizedBox(height: 20,),
                      Container(
-                       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                         BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                       ]),
+                       // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                       //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                       // ]),
                        child: phoneNumberField,
                      ),
 
                      SizedBox(height: 20,),
                      Container(
-                       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                         BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                       ]),
+                       // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                       //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                       // ]),
                        child: passwordField,
                      ),
                      SizedBox(height: 20,),
                      Container(
-                       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                         BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                       ]),
+                       // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                       //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                       // ]),
                        child: confirmPasswordField,
                      ),
                      SizedBox(height: 30,),
-                     Container(child: signUpButton,),
+                     loading ? CircularProgressIndicator(): Container(child: signUpButton,),
                    ],
                  ),
                ),
@@ -399,7 +414,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       GestureDetector(
 
                         onTap: (){
-                          Navigator.pushNamed(context, AvailableCarsScreen.routeName);
+                          Navigator.pop(context);
                         },
                         child: Text("Connecte Vouz",style: TextStyle(fontSize: 20,color: Color(0xffCEA110),fontWeight: FontWeight.w500),),
                       )
@@ -418,12 +433,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
   void signUp(String email, String password) async {
     if(_formkey.currentState!.validate()){
-
+      setState(() {
+        loading= true;
+      });
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) => {postDetailsToFirestore()
       }).catchError((e){
         Fluttertoast.showToast(msg: e!.message);
+      });
+      setState(() {
+        loading = false;
       });
 
     }

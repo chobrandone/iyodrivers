@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iyodrivers/screens/auth/signup_screen.dart';
 import 'package:iyodrivers/screens/screens.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:iyodrivers/services/auth_service.dart';
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
 
@@ -24,7 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //firebase
   final _auth = FirebaseAuth.instance;
-
+//loader
+  bool loading =false;
   @override
   Widget build(BuildContext context) {
 
@@ -60,9 +63,9 @@ class _LoginScreenState extends State<LoginScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
     );
@@ -99,9 +102,9 @@ class _LoginScreenState extends State<LoginScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
     );
@@ -141,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   //   child: Image.asset("assets/logo.png"),
                   // ),
                   Container(
-                    // height: 250,
+                    height: 250,
                     decoration: BoxDecoration(
 
                       borderRadius: BorderRadius.only(bottomLeft: Radius.circular(90)),
@@ -197,23 +200,23 @@ class _LoginScreenState extends State<LoginScreen> {
                        SizedBox(height: 20,),
                        Container(
 
-                         decoration: BoxDecoration(
-
-                             color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                           BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.3))
-                         ]),
+                         // decoration: BoxDecoration(
+                         //
+                         //     color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                         //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.3))
+                         // ]),
                          child: emailField,
                        ),
 
                        SizedBox(height: 20,),
                        Container(
-                         decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                           BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                         ]),
+                         // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                         //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                         // ]),
                          child: passwordField,
                        ),
                        SizedBox(height: 30,),
-                       Container(
+                       loading ? CircularProgressIndicator(): Container(
                          child: loginButton,),
                      ],
                    ),
@@ -240,12 +243,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           // width: 300,
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(right: 20, left: 20),
-                        child: Image.asset(
-                          "assets/images/google.png",
-                          // height: 200,
-                          // width: 300,
+                      GestureDetector(
+
+                        child: Container(
+                          margin: EdgeInsets.only(right: 20, left: 20),
+                          child: Image.asset(
+                            "assets/images/google.png",
+                            // height: 200,
+                            // width: 300,
+                          ),
                         ),
                       ),
                       Container(
@@ -267,13 +273,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(width: 10,),
                       GestureDetector(
                         onTap: (){
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const SignUpScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+
                         },
                         child: Text("S'inscrire",style: TextStyle(fontSize: 20,color: Color(0xffCEA110),fontWeight: FontWeight.bold),),
                       )
                     ],
-                  )
-
+                  ),
+                  SizedBox(height: 30,),
                 ],),
             ),
           ) ,
@@ -285,18 +292,28 @@ class _LoginScreenState extends State<LoginScreen> {
   }
   void signIn(String email, String password) async {
     if(_formkey.currentState!.validate()){
+      setState(() {
+        loading= true;
+      });
       await _auth.signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
         Fluttertoast.showToast(msg:"Login Successful"),
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const AvailableCarsScreen()))
+      Navigator.push(context, MaterialPageRoute(builder: (context) => AvailableCarsScreen()))
+        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const AvailableCarsScreen()))
       }).catchError((e){
         Fluttertoast.showToast(msg:e!.message);
+        setState(() {
+          loading= false;
+        });
       });
     }
   }
 
 
 }
-
 class _auth {
 }
+
+
+
+

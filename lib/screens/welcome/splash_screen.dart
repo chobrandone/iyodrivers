@@ -46,9 +46,10 @@ class _SplashScreenState extends State<SplashScreen> {
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children:<Widget> [
             Container(
-              child: Image.asset("assets/images/logowhite.png"),
+              child: Image.asset("assets/images/logowhite.png", width: 400,
+              ),
             ),
             Container(
               child: Image.asset(
@@ -57,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 8,
             ),
             Container(
               child: const Center(
@@ -86,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             const SizedBox(
-              height: 45,
+              height: 40,
             ),
 
             Container(
@@ -134,8 +135,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ],
         ),
       )
-      // child: Center(
-      // child: Image.asset("assets/images/homecar.png"),
+
       // ),
     ));
   }
