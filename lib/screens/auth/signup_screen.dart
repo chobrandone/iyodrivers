@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:iyodrivers/main_page.dart';
 import 'package:iyodrivers/screens/cars/available_cars_screen.dart';
 
+import '../../models/google_sign_in.dart';
 import '../../models/user_model.dart';
+import 'package:iyodrivers/services/auth_service.dart';
 import 'login_screen.dart';
 // import 'package:iyodriver/Screens/screens.dart';
 
@@ -34,6 +37,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   // boolean loading
   bool loading =false;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -385,12 +390,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           // width: 300,
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(right: 20, left: 20),
-                        child: Image.asset(
-                          "assets/images/google.png",
-                          // height: 200,
-                          // width: 300,
+                      GestureDetector(
+                        onTap: () async{
+                          await Googlesignin().signInWithGoogle();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => AvailableCarsScreen()));
+
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(right: 20, left: 20),
+                          child: Image.asset(
+                            "assets/images/google.png",
+                            // height: 200,
+                            // width: 300,
+                          ),
                         ),
                       ),
                       Container(

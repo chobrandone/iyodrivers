@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "999530684052-d139919sk85n22dj4v89icurth079t3m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.iyodrivers",
+            "certificate_hash": "2ca1a9d1a3b561509574b62a27ec4d8d8b1dfe54"
+          }
+        },
+        {
           "client_id": "999530684052-ds9a8vdjku65dj5eseq6bnf1t3blih7v.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "999530684052-ds9a8vdjku65dj5eseq6bnf1t3blih7v.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "999530684052-luuthheua2qrfmdj3pi40f7o4dbcnh2j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.iyodrivers"
+              }
             }
           ]
         }

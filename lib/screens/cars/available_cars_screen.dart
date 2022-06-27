@@ -41,13 +41,14 @@ class _AvailableCarsScreenState extends State<AvailableCarsScreen> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
 
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
        Container(
-         margin: EdgeInsets.only(left: 20,right: 20,top: 10),
+         margin: EdgeInsets.only(left: 20,right: 20,top: 30),
          child: Row(
            children: [
             Expanded(child: Column(
@@ -58,33 +59,26 @@ class _AvailableCarsScreenState extends State<AvailableCarsScreen> {
                   child: Text(
                       "welcome", style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
                 ),
-                Text("${loggedInUser.name  }",style: TextStyle(fontWeight: FontWeight.w200,fontSize: 20),),
+                Text("${user?.displayName  }",style: TextStyle(fontWeight: FontWeight.w200,fontSize: 20),),
               ],
             ),
             ),
              Column(
+
                children: [
-                 Container(
-                   decoration: const BoxDecoration(),
-                   child: Container(
-                     width:50,
-                     // height: 350.0,
-                     child: Center(
-                       child: Column(
-                         children: const [
-                           CircleAvatar(
-                             backgroundImage: AssetImage(
-                               "assets/images/pic.png",
-                             ),
-                             radius: 50.0,
-
-                           )
-
-                         ],
-                       ),
-                     ),
+                
+                 GestureDetector(
+                   onTap: () {
+                     // Navigator.pushNamed(context, AvailableCarsScreen.routeName);
+                   },
+                   child:   const Icon(
+                     Icons.logout_outlined,
+                     size: 20,
+                     color: Color(0xffCEA110),
                    ),
-                 )
+                 ),
+                 Text("logout")
+                 
                ],
              )
            ],
@@ -174,7 +168,7 @@ class _AvailableCarsScreenState extends State<AvailableCarsScreen> {
                       ),
                      GestureDetector(
                        onTap: () {
-                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const BookNowScreen()));
+                         Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const BookNowScreen()));
                        },
                        child:  Container(
 

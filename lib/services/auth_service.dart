@@ -6,17 +6,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:iyodrivers/screens/auth/login_screen.dart';
 import 'package:iyodrivers/screens/cars/available_cars_screen.dart';
 
-handleAuthState() {
-  return StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.hasData) {
-          return AvailableCarsScreen();
-        } else {
-          return const LoginScreen();
-        }
-      });
-}
+// handleAuthState() {
+//   return StreamBuilder(
+//       stream: FirebaseAuth.instance.authStateChanges(),
+//       builder: (BuildContext context, snapshot) {
+//         if (snapshot.hasData) {
+//           return AvailableCarsScreen();
+//         } else {
+//           return const LoginScreen();
+//         }
+//       });
+// }
 signInWithGoogle() async {
   // Trigger the authentication flow
   final GoogleSignInAccount? googleUser = await GoogleSignIn(

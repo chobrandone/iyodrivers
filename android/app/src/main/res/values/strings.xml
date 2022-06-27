@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">iyodriver</string>
+    <string name="facebook_app_id">713909183247643</string>
+    <string name="fb_login_protocol_scheme">fb713909183247643</string>
+    <string name="facebook_client_token">74b01a621c057fe8c69f95d1d69f86ef</string>
+
+
+</resources>

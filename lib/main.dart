@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iyodrivers/main_page.dart';
 import 'package:iyodrivers/screens/auth/login_screen.dart';
 import 'package:iyodrivers/screens/welcome/splash_screen.dart';
 import 'firebase_options.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
 
 
-      home:SplashScreen(),
+      home:AuthService().handleAuthState(),
     );
   }
 }

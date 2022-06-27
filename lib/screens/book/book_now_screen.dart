@@ -68,9 +68,9 @@ class _BookNowScreenState extends State<BookNowScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
     );
@@ -106,9 +106,9 @@ class _BookNowScreenState extends State<BookNowScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
     );
@@ -146,9 +146,9 @@ class _BookNowScreenState extends State<BookNowScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
     );
@@ -185,9 +185,9 @@ class _BookNowScreenState extends State<BookNowScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
     );
@@ -237,8 +237,8 @@ class _BookNowScreenState extends State<BookNowScreen> {
 
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        // hintText: "${date.day}/${date.month}/${date.year}",
-            counterText: "${date.day}/${date.month}/${date.year}",
+        hintText: "${date.day}/${date.month}/${date.year}",
+        //     counterText: "${date.day}/${date.month}/${date.year}",
 
             // counterText: "${date.day}/${date.month}/${date.year}",
 
@@ -249,9 +249,9 @@ class _BookNowScreenState extends State<BookNowScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
     );
@@ -297,9 +297,9 @@ class _BookNowScreenState extends State<BookNowScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
     );
@@ -335,9 +335,9 @@ class _BookNowScreenState extends State<BookNowScreen> {
           contentPadding: EdgeInsets.fromLTRB(20, 15 , 20, 15),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.white)),
+              borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Colors.grey)),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30))),
 
     );
@@ -355,7 +355,7 @@ class _BookNowScreenState extends State<BookNowScreen> {
           Map <String,dynamic> data ={"name":nameEditingController.text,"email":emailEditingController.text,"phoneNumber":phoneNumberEditingController.text,"brand":carBrandEditingController.text,"date":dateEditingController.text,"time":timeEditingController.text};
           FirebaseFirestore.instance.collection("reserve").add(data);
         },
-        child: Text("Login",textAlign: TextAlign.center, style: TextStyle(color: Colors.white,fontSize: 20),),
+        child: Text("Reserve",textAlign: TextAlign.center, style: TextStyle(color: Colors.white,fontSize: 20),),
       ),
     );
 
@@ -423,33 +423,33 @@ class _BookNowScreenState extends State<BookNowScreen> {
                       SizedBox(height: 20,),
                       Container(
 
-                        decoration: BoxDecoration(
-
-                            color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                          BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.3))
-                        ]),
+                        // decoration: BoxDecoration(
+                        //
+                        //     color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                        //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.3))
+                        // ]),
                         child: nameField,
                       ),
 
                       SizedBox(height: 20,),
                       Container(
-                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                          BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                        ]),
+                        // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                        //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                        // ]),
                         child:emailField,
                       ),
                       SizedBox(height: 30,),
                       Container(
-                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                          BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                        ]),
+                        // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                        //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                        // ]),
                         child:phoneNumberField,
                       ),
                       SizedBox(height: 30,),
                       Container(
-                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                          BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                        ]),
+                        // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                        //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                        // ]),
                         child:carBrandField,
                       ),
                       SizedBox(height: 30,),
@@ -477,10 +477,10 @@ class _BookNowScreenState extends State<BookNowScreen> {
                               width: w * 0.4,
                               height: h * 0.065,
                               margin: const EdgeInsets.only( top: 10),
-                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                                BoxShadow(
-                                    blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                              ]),
+                              // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                              //   BoxShadow(
+                              //       blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                              // ]),
                               child: dateField
                             ),
                           ),
@@ -502,10 +502,10 @@ class _BookNowScreenState extends State<BookNowScreen> {
                               width: w * 0.4,
                               height: h * 0.065,
                               margin: const EdgeInsets.only(top: 10, right: 20),
-                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                                BoxShadow(
-                                    blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
-                              ]),
+                              // decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                              //   BoxShadow(
+                              //       blurRadius: 10, spreadRadius: 7, offset: const Offset(1, 1), color: Colors.grey.withOpacity(0.2))
+                              // ]),
                               child: timeField
                             ),
                           ),
