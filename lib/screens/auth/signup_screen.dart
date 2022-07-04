@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iyodrivers/main_page.dart';
 import 'package:iyodrivers/screens/cars/available_cars_screen.dart';
 
-import '../../models/google_sign_in.dart';
+
 import '../../models/user_model.dart';
 import 'package:iyodrivers/services/auth_service.dart';
+import '../../services/google_sign_in.dart';
 import 'login_screen.dart';
 // import 'package:iyodriver/Screens/screens.dart';
 
@@ -256,6 +259,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Text("Inscrire",textAlign: TextAlign.center, style: TextStyle(color: Colors.white,fontSize: 20),),
         ),
       );
+      double w = MediaQuery.of(context).size.width;
+      double h = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -373,48 +378,68 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Text(
                       "ou",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 15,
                       ),
+                    ),
+                  ),
+
+                Container(
+                    width: w*1,
+
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50)
+                    ),
+                    child: SignInButton(
+
+                      Buttons.Google,
+                      text: "Google",
+                      onPressed: () async {
+                        await Googlesignin().signInWithGoogle();
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => AvailableCarsScreen()));
+
+                      },
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Image.asset(
-                          "assets/images/call.png",
-                          // height: 200,
-                          // width: 300,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () async{
-                          await Googlesignin().signInWithGoogle();
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => AvailableCarsScreen()));
-
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(right: 20, left: 20),
-                          child: Image.asset(
-                            "assets/images/google.png",
-                            // height: 200,
-                            // width: 300,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: Image.asset(
-                          "assets/images/facebook.png",
-                          // height: 200,
-                          // width: 300,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Container(
+                  //       child: Image.asset(
+                  //         "assets/images/call.png",
+                  //         // height: 200,
+                  //         // width: 300,
+                  //       ),
+                  //     ),
+                  //     GestureDetector(
+                  //       onTap: () async{
+                  //         await Googlesignin().signInWithGoogle();
+                  //         Navigator.push(context,
+                  //             MaterialPageRoute(builder: (context) => AvailableCarsScreen()));
+                  //
+                  //       },
+                  //       child: Container(
+                  //         margin: EdgeInsets.only(right: 20, left: 20),
+                  //         child: Image.asset(
+                  //           "assets/images/google.png",
+                  //           // height: 200,
+                  //           // width: 300,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     Container(
+                  //       child: Image.asset(
+                  //         "assets/images/facebook.png",
+                  //         // height: 200,
+                  //         // width: 300,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 10,
                   ),

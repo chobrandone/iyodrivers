@@ -8,9 +8,11 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:iyodrivers/services/auth_service.dart';
-import 'package:iyodrivers/services/firebase_auth_methods.dart';
+import 'package:iyodrivers/services/reset_password.dart';
 
-import '../../models/google_sign_in.dart';
+
+
+import '../../services/google_sign_in.dart';
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
 
@@ -247,6 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: passwordField,
                         ),
                         SizedBox(height: 13,),
+                        forgetPassword(context),
                         Container(
                           alignment: Alignment.topRight,
                           margin: EdgeInsets.only(right: 12),
@@ -282,8 +285,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       // )
 
 // with custom text
-                      loading ? CircularProgressIndicator(): Container(
-                        width: w*0.5,
+                   Container(
+                        width: w*1,
 
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
@@ -302,21 +305,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
-                      Container(
-                        width: w*0.5,
-                        // margin: EdgeInsets.only(right: 20),
-                        padding: EdgeInsets.all(20),
-                        child: SignInButton(
-                          Buttons.Facebook,
-                          text: "Facebook",
-                          onPressed: () {
-                            // await signInWithFacebook().signInWithGoogle();
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) => AvailableCarsScreen()));
-
-                          },
-                        ),
-                      ),
+                      // Container(
+                      //   width: w*0.5,
+                      //   // margin: EdgeInsets.only(right: 20),
+                      //   padding: EdgeInsets.all(20),
+                      //   child: SignInButton(
+                      //     Buttons.Facebook,
+                      //     text: "Facebook",
+                      //     onPressed: () async {
+                      //       // await FacebookSignin().signInWithFacebaook();
+                      //       // Navigator.push(context,
+                      //       //     MaterialPageRoute(builder: (context) => AvailableCarsScreen()));
+                      //
+                      //     },
+                      //   ),
+                      // ),
 
 
                       // Container(
@@ -410,8 +413,8 @@ class _LoginScreenState extends State<LoginScreen> {
       await _auth.signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
         Fluttertoast.showToast(msg:"Login Successful"),
-        Navigator.push(context, MaterialPageRoute(builder: (context) => AvailableCarsScreen()))
-        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const AvailableCarsScreen()))
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => AvailableCarsScreen()))
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const AvailableCarsScreen()))
       }).catchError((e){
         Fluttertoast.showToast(msg:e!.message);
         setState(() {
@@ -421,7 +424,16 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-
+  Widget forgetPassword(BuildContext context){
+    return Container(width: MediaQuery.of(context).size.width,
+    height: 35,
+      alignment: Alignment.bottomRight,
+      child: TextButton(child: Text("Forgot Password", style: TextStyle(color: Colors.black54), textAlign: TextAlign.right,),
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>ResetPassword()));
+      },),
+    );
+  }
 
 
 }

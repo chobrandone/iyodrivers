@@ -22,8 +22,8 @@ Route generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute<Widget>(builder: (_) => const SignUpScreen());
     // case MainScreen.routeName:
     //   return MaterialPageRoute<Widget>(builder: (_) => const MainScreen());
-    case AvailableCarsScreen.routeName:
-      return MaterialPageRoute<Widget>(builder: (_) => const AvailableCarsScreen());
+    // case AvailableCarsScreen.routeName:
+    //   return MaterialPageRoute<Widget>(builder: (_) => const AvailableCarsScreen());
     case ProfileScreen.routeName:
       return MaterialPageRoute<Widget>(builder: (_) => const ProfileScreen());
     case BookNowScreen.routeName:

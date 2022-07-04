@@ -43,10 +43,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: const [
                     CircleAvatar(
-                      backgroundImage: AssetImage(
-                        "assets/images/pic.png",
-                      ),
-                      radius: 50.0,
+                      backgroundColor: Colors.grey,
+                      // backgroundImage: AssetImage(
+                      //   "assets/images/pic.png",
+                      // ),
+                      // radius: 50.0,
 
                     )
 

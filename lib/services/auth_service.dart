@@ -1,40 +1,57 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:iyodrivers/screens/auth/login_screen.dart';
-import 'package:iyodrivers/screens/cars/available_cars_screen.dart';
 
-// handleAuthState() {
-//   return StreamBuilder(
-//       stream: FirebaseAuth.instance.authStateChanges(),
-//       builder: (BuildContext context, snapshot) {
-//         if (snapshot.hasData) {
-//           return AvailableCarsScreen();
-//         } else {
-//           return const LoginScreen();
-//         }
-//       });
-// }
-signInWithGoogle() async {
-  // Trigger the authentication flow
-  final GoogleSignInAccount? googleUser = await GoogleSignIn(
-      scopes: <String>["email"]).signIn();
+import '../screens/cars/available_cars_screen.dart';
 
-  // Obtain the auth details from the request
-  final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+class AuthMethods extends StatefulWidget {
+  const AuthMethods({Key? key}) : super(key: key);
 
-  // Create a new credential
-  final credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth.accessToken,
-    idToken: googleAuth.idToken,
-  );
-
-  // Once signed in, return the UserCredential
-  return await FirebaseAuth.instance.signInWithCredential(credential);
+  @override
+  _AuthMethodsState createState() => _AuthMethodsState();
 }
+
+class _AuthMethodsState extends State<AuthMethods> {
+  //form key
+  final _formkey = GlobalKey<FormState>();
+
+  //ediiting controller
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController passWordContreller = new TextEditingController();
+
+//firebase
+  final _auth = FirebaseAuth.instance;
+//loader
+  bool loading =false;
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+
+  void signIn(String email, String password) async {
+    final _formkey = GlobalKey<FormState>();
+    if(_formkey.currentState!.validate()){
+      setState(() {
+        loading= true;
+      });
+      await _auth.signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+        Fluttertoast.showToast(msg:"Login Successful"),
+        Navigator.push(context, MaterialPageRoute(builder: (context) => AvailableCarsScreen()))
+        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const AvailableCarsScreen()))
+      }).catchError((e){
+        Fluttertoast.showToast(msg:e!.message);
+        setState(() {
+          loading= false;
+        });
+      });
+    }
+  }
+
 //Sign out
-signOut() {
-  FirebaseAuth.instance.signOut();
+  signOut() {
+    FirebaseAuth.instance.signOut();
+  }
 }

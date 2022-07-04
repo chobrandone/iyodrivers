@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../cars/available_cars_screen.dart';
 import '../profile/profile_screen.dart';
 
@@ -13,6 +14,7 @@ class BookNowScreen extends StatefulWidget {
 }
 
 class _BookNowScreenState extends State<BookNowScreen> {
+  // DateTime _selectedDate;
   List<String> items = ['methos of payment','Cash','Momo'];
   String? selectedItem= 'methos of payment';
 
@@ -31,6 +33,14 @@ class _BookNowScreenState extends State<BookNowScreen> {
   final carBrandEditingController = new TextEditingController();
   final paymentEditingController = new TextEditingController();
 
+bool loading =false;
+void launchWhatsapp({required number, @required message})async{
+var url ="whatsapp://send?phone=$number&text=$message";
+
+  // await canLaunchUrl(url) ? launch(url) : print ("cant open");
+
+
+}
   @override
   Widget build(BuildContext context) {
 
@@ -219,18 +229,7 @@ class _BookNowScreenState extends State<BookNowScreen> {
         });
       },
 
-      // validator: () {},
-      // validator: (value) {
-      //   if (value!.isEmpty) {
-      //     return ("Please Enter the date");
-      //   }
-      //   // reg expression for email validation
-      //   if (!RegExp("^[^[0-9+_.-]")
-      //       .hasMatch(value)) {
-      //     return ("Please Enter a valid date");
-      //   }
-      //   return null;
-      // },
+
       onSaved :(value){
         dateEditingController.text=value!;
       },
@@ -382,7 +381,10 @@ class _BookNowScreenState extends State<BookNowScreen> {
 
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, AvailableCarsScreen.routeName);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => AvailableCarsScreen()));
+
+                          // Navigator.pushNamed(context, AvailableCarsScreen.routeName);
                         },
                         child:   const Icon(
                           Icons.arrow_back,
@@ -454,6 +456,8 @@ class _BookNowScreenState extends State<BookNowScreen> {
                       ),
                       SizedBox(height: 30,),
 
+
+
                       Row(
                         children: [
                           GestureDetector(
@@ -511,14 +515,14 @@ class _BookNowScreenState extends State<BookNowScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 30,),
                       // Container(
                       //
-                      //   decoration: BoxDecoration(
-                      //
-                      //       color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
-                      //     BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.3))
-                      //   ]),
+                      //   // decoration: BoxDecoration(
+                      //   //
+                      //   //     color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [
+                      //   //   BoxShadow(blurRadius: 10, spreadRadius: 7, offset: Offset(1, 1), color: Colors.grey.withOpacity(0.3))
+                      //   // ]),
                       // child: Container(
                       //   width: 280,
                       //   padding: EdgeInsets.only(left: 20,right: 20),
@@ -535,22 +539,44 @@ class _BookNowScreenState extends State<BookNowScreen> {
                       // ),
                       // ),
 
+            Row(
+                children: [
+                  Container(
+                    width: 200,
+                    child:  loading ? CircularProgressIndicator(): Container(
+                      child: bookButton,),
+                  ),
+                  SizedBox(width: 13,),
+                  Container(
+                    child: Text(
+                      "ou",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 13,),
 
+                  Container(
+                    child: Image.asset('assets/images/calls.png'),
+                  )
+                ],
+            ),
 
-                      Container(
-                        child: bookButton,),
+                      // loading ? CircularProgressIndicator(): Container(
+                      //   child: bookButton,),
                     ],
                   ),
                 ),
                 SizedBox(height: 13,),
-                Container(
-                  child: Text(
-                    "ou",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
+                // Container(
+                //   child: Text(
+                //     "ou",
+                //     style: TextStyle(
+                //       fontSize: 20,
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 10,
                 ),
@@ -559,8 +585,16 @@ class _BookNowScreenState extends State<BookNowScreen> {
 
               ],),
           ),
+
         ),
+
       ),
+
+
+
     );
+
   }
 }
+
+

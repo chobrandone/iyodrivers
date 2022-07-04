@@ -5,6 +5,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../screens/auth/login_screen.dart';
@@ -34,9 +35,11 @@ import '../screens/welcome/splash_screen.dart';
 //
 // }
 class Googlesignin{
+
   final _auth = FirebaseAuth.instance;
   final _googleSignIn = GoogleSignIn();
   signInWithGoogle() async {
+
     final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
     GoogleSignInAuthentication? googleAuth = await googleSignInAccount?.authentication;
     AuthCredential credential = GoogleAuthProvider.credential(
@@ -48,5 +51,9 @@ class Googlesignin{
 
   }
 }
+signOut() {
+  FirebaseAuth.instance.signOut();
+}
+
 
 

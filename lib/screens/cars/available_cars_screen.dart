@@ -5,6 +5,7 @@ import 'package:iyodrivers/screens/screens.dart';
 import 'package:iyodrivers/routes/route.dart';
 
 import '../../models/user_model.dart';
+import '../../services/google_sign_in.dart';
 
 class AvailableCarsScreen extends StatefulWidget {
   static const routeName = '/available-cars';
@@ -57,7 +58,7 @@ class _AvailableCarsScreenState extends State<AvailableCarsScreen> {
                 Container(
 
                   child: Text(
-                      "welcome", style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+                      "Bienvenue", style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
                 ),
                 Text("${user?.displayName  }",style: TextStyle(fontWeight: FontWeight.w200,fontSize: 20),),
               ],
@@ -68,16 +69,17 @@ class _AvailableCarsScreenState extends State<AvailableCarsScreen> {
                children: [
                 
                  GestureDetector(
-                   onTap: () {
-                     // Navigator.pushNamed(context, AvailableCarsScreen.routeName);
+                   onTap: () async{
+                    signOut;
+                     Navigator.pushNamed(context, LoginScreen.routeName);
                    },
                    child:   const Icon(
                      Icons.logout_outlined,
-                     size: 20,
+                     size: 30,
                      color: Color(0xffCEA110),
                    ),
                  ),
-                 Text("logout")
+                 Text("Déconnecter")
                  
                ],
              )
